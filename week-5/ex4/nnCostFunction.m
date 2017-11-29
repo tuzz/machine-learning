@@ -119,10 +119,18 @@ Delta2 = delta3' * hiddenActivations;
 % Compute Delta1 by multiplying the hidden errors by the input activations.
 Delta1 = delta2' * X;
 
-% Divide the accumulated gradients by the number of training examples.
-% We can throw away the gradients of the bias units.
-Theta1_grad = Delta1 / m;
-Theta2_grad = Delta2 / m;
+% Compute the regularization terms for the gradients.
+Delta1Reg = lambda / m * Theta1NoBias;
+Delta2Reg = lambda / m * Theta2NoBias;
+
+% Set the regularizing term to 0 for bias units.
+Delta1Reg = [zeros(size(Delta1Reg, 1), 1) Delta1Reg];
+Delta2Reg = [zeros(size(Delta2Reg, 1), 1) Delta2Reg];
+
+% Divide the accumulated gradients by the number of training examples and add
+% the regularization terms.
+Theta1_grad = Delta1 / m + Delta1Reg;
+Theta2_grad = Delta2 / m + Delta2Reg;
 
 % Unroll gradients
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
