@@ -83,14 +83,25 @@ termForYIsOne = expectedOutputs .* log(outputActivations);
 termForYIsZero = (1 - expectedOutputs) .* log(1 - outputActivations);
 costs = -(termForYIsOne + termForYIsZero);
 
-% The cost is the sum of all output neuron costs for all training examples.
-J = sum(sum(costs)) / m;
+% Compute the unregularized cost.
+% This is the sum of all output neuron costs for all training examples.
+unregCost = sum(sum(costs)) / m;
 
+% Exclude bias units from regularization.
+Theta1NoBias = Theta1(:, 2:end);
+Theta2NoBias = Theta2(:, 2:end);
 
+% Sum over all weights.
+Theta1Sum = sum(sum(Theta1NoBias .^ 2));
+Theta2Sum = sum(sum(Theta2NoBias .^ 2));
 
+% Compute the cost of the regularization term.
+regularizationCost = lambda / (2 * m) * (Theta1Sum + Theta2Sum);
+
+% The total cost is the unregularized cost plus the regularization term.
+J = unregCost + regularizationCost;
 
 % Unroll gradients
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
-
 
 end
