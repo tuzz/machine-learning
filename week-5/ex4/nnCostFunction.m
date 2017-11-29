@@ -101,6 +101,29 @@ regularizationCost = lambda / (2 * m) * (Theta1Sum + Theta2Sum);
 % The total cost is the unregularized cost plus the regularization term.
 J = unregCost + regularizationCost;
 
+% Compute the errors of the output layer.
+delta3 = outputActivations - expectedOutputs;
+
+% Rather than use sigmoidGradient, we can reuse the activations of the hidden
+% units. I found this tip on the Coursera discussion forums.
+sigmoidGrad = hiddenActivations .* (1 - hiddenActivations);
+sigmoidGradNoBias = sigmoidGrad(:, 2:end);
+
+% Distribute the errors back along the weights of the previous layer and
+% multiply the sum for each unit by the sigmoid gradient of that unit.
+delta2 = delta3 * Theta2NoBias .* sigmoidGradNoBias;
+
+% Compute Delta2 by multiplying the output errors by the hidden activations.
+Delta2 = delta3' * hiddenActivations;
+
+% Compute Delta1 by multiplying the hidden errors by the input activations.
+Delta1 = delta2' * X;
+
+% Divide the accumulated gradients by the number of training examples.
+% We can throw away the gradients of the bias units.
+Theta1_grad = Delta1 / m;
+Theta2_grad = Delta2 / m;
+
 % Unroll gradients
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
 
