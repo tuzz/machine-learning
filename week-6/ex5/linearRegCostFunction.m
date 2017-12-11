@@ -11,8 +11,8 @@ m = length(y); % number of training examples
 
 % hypothesis vs. actual term:
 expected = X * theta;
-actual = y;
-squareErrors = (expected - actual) .^ 2;
+difference = expected - y;
+squareErrors = difference .^ 2;
 sumOfSquares = sum(squareErrors);
 costWithoutReg = sumOfSquares / (2 * m);
 
@@ -23,9 +23,12 @@ regCost = lambda / (2 * m) * sumOfThetaSquares;
 
 J = costWithoutReg + regCost;
 
+% gradient:
+gradWithoutReg = (difference' * X) / m;
+regGrad = lambda / m * theta;
+regGrad(1) = 0; % don't regularize bias
+grad = gradWithoutReg + regGrad';
 
-
-grad = zeros(size(theta));
 grad = grad(:);
 
 end
