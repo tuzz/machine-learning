@@ -218,3 +218,10 @@ end
 
 fprintf('Program paused. Press enter to continue.\n');
 pause;
+
+%% optional exercise 3.4
+lambda = 3;
+theta = trainLinearReg(X_poly, y, lambda);
+cost = linearRegCostFunction(X_poly_test, ytest, theta, 0);
+disp("Cost on Xtest with lambda=3 is:");
+disp(cost);
