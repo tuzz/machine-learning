@@ -16,11 +16,10 @@ sim = 0;
 %
 %
 
+delta = x1 - x2;
+squares = delta .^ 2;
+sumOfSquares = sum(squares);
+denominator = 2 * sigma * sigma;
+sim = e .^ (-sumOfSquares / denominator);
 
-
-
-
-
-% =============================================================
-    
 end
