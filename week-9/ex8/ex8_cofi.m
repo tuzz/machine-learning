@@ -145,6 +145,17 @@ my_ratings(183) = 4;
 my_ratings(226) = 5;
 my_ratings(355)= 5;
 
+% Rate all the Batman films as 5 stars:
+my_ratings(29) = 5;
+my_ratings(231) = 5;
+my_ratings(254) = 5;
+my_ratings(403) = 5;
+
+% Rate some musicals as 1 and 2 star:
+my_ratings(132) = 1;
+my_ratings(419) = 2;
+my_ratings(143) = 1;
+
 fprintf('\n\nNew user ratings:\n');
 for i = 1:length(my_ratings)
     if my_ratings(i) > 0 
