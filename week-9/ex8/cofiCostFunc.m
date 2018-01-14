@@ -47,15 +47,20 @@ deltas = (X * Theta' - Y) .* R;
 % Calculate the square-error cost function.
 sumOfSquares = sum(sum(deltas .^ 2)) / 2;
 
-% Calculate the regularization terms.
+% Calculate the regularization cost terms.
 regTheta = lambda / 2 * sum(sum(Theta .^ 2));
 regX = lambda / 2 * sum(sum(X .^ 2));
 
 % Calculate the regularized cost.
 J = sumOfSquares + regTheta + regX;
 
-X_grad = deltas * Theta;
-Theta_grad = deltas' * X;
+% Calculate the regularized gradient terms.
+regThetaGrad = lambda * Theta;
+regXGrad = lambda * X;
+
+% Calculate the regularized gradients.
+X_grad = deltas * Theta + regXGrad;
+Theta_grad = deltas' * X + regThetaGrad;
 
 grad = [X_grad(:); Theta_grad(:)];
 
