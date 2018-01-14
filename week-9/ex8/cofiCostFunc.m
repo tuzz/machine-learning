@@ -47,6 +47,9 @@ deltas = (X * Theta' - Y) .* R;
 % Calculate the square-error cost function.
 J = sum(sum(deltas .^ 2)) / 2;
 
+X_grad = deltas * Theta;
+Theta_grad = deltas' * X;
+
 grad = [X_grad(:); Theta_grad(:)];
 
 end
